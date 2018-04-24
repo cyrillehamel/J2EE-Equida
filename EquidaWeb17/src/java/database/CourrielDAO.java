@@ -31,7 +31,7 @@ public class CourrielDAO {
         {
             //preparation de la requete     
             //codeCateg="ETE";
-            requete=connection.prepareStatement("SELECT c.id as idCourriel,c.date as dateCourriel ,c.objet,c.corps,c.codeVente, p.chemin , p.description, p.id as idPiecejointe FROM courriel c, piecejointe p, vente v,courrielpiecejointe cp where c.id=cp.codeCourriel and cp.codePieceJointe=p.id and v.id=c.codeVente and v.id=? ");
+            requete=connection.prepareStatement("SELECT c.id as idCourriel,c.date as dateCourriel ,c.objet,c.corps,c.codeVente FROM courriel c, vente v where v.id=c.codeVente and v.id=? ");
             requete.setString(1, codeVente);
             //executer la requete
             rs=requete.executeQuery();
