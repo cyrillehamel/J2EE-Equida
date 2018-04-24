@@ -33,8 +33,10 @@ public class LotDAO {
             // id (clé primaire de la table client) est en auto_increment,donc on ne renseigne pas cette valeur
             // la paramètre RETURN_GENERATED_KEYS est ajouté à la requête afin de pouvoir récupérer l'id généré par la bdd (voir ci-dessous)
             // supprimer ce paramètre en cas de requête sans auto_increment.
-            requete=connection.prepareStatement("INSERT INTO Lot ( prixDepart, codeVente, codeCheval, codeVendeur)\n" +
+
+            requete=connection.prepareStatement("INSERT INTO lot ( prixDepart, codeVente, codeCheval, codeVendeur)\n" +
                     "VALUES (?,?,?,?)", requete.RETURN_GENERATED_KEYS );
+            
             requete.setInt(1, unLot.getPrixDepart());
             requete.setInt(2, unLot.getUneVente().getId());
             requete.setInt(3, unLot.getUnCheval().getId());
