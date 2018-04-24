@@ -116,20 +116,20 @@ public class ServletVentes extends HttpServlet {
         // Implémente la fonctionnalité « Saisie d'une vente de chevaux »
         if(url.equals("/EQUI01/ServletVentes/ajouterVente"))
         {
-            ArrayList<Lieu> lesLieux = LieuDAO.getLesLieu(connection);
+            ArrayList<Lieu> lesLieux = LieuDAO.getLesLieux(connection);
             request.setAttribute("pLesLieux", lesLieux);
-            
-            ArrayList<TypeCheval> lesTypesCheval = TypeChevalDAO.getLesTypesCheval(connection);
-            request.setAttribute("pLesTypesCheval", lesTypesCheval);
             
             ArrayList<CategVente> lesCategVente = CategVenteDAO.getLesCategVentes(connection);
             request.setAttribute("pLesCategVente", lesCategVente);
+            
+            System.out.println("Servlet");
+            
             this.getServletContext().getRequestDispatcher("/vues/ventes/venteAjouter.jsp" ).forward( request, response );
         }
         // liste les lieux
         if(url.equals("/EQUI01/ServletVentes/listerLesLieux"))
         {
-            ArrayList<Lieu> lesLieux = LieuDAO.getLesLieu(connection);
+            ArrayList<Lieu> lesLieux = LieuDAO.getLesLieux(connection);
             request.setAttribute("pLesLieux", lesLieux);
             this.getServletContext().getRequestDispatcher("/vues/ventes/listerLesLieux.jsp" ).forward( request, response );
         }
@@ -186,18 +186,25 @@ public class ServletVentes extends HttpServlet {
         if (form.getErreurs().isEmpty()){
             // Il n'y a pas eu d'erreurs de saisie, donc on renvoie la vue affichant les infos du client 
             
-            System.out.println("passe ici");
+            System.out.println("go to lister");
             VenteDAO.ajouterVente(connection, uneVente);
+            
+            ArrayList<Vente> lesVentes = VenteDAO.getLesVentes(connection);
+            request.setAttribute("pLesVentes", lesVentes);
+            
             this.getServletContext().getRequestDispatcher("/vues/ventes/listerLesVentes.jsp" ).forward( request, response );
         }
         else
         { 
 		// il y a des erreurs. On réaffiche le formulaire avec des messages d'erreurs
-            ArrayList<Lieu> lesLieux = LieuDAO.getLesLieu(connection);
+            ArrayList<Lieu> lesLieux = LieuDAO.getLesLieux(connection);
             request.setAttribute("pLesLieux", lesLieux);
             
-            ArrayList<TypeCheval> lesTypesCheval = TypeChevalDAO.getLesTypesCheval(connection);
-            request.setAttribute("pLesTypesCheval", lesTypesCheval);
+            ArrayList<CategVente> lesCateg = CategVenteDAO.getLesCategVentes(connection);
+            request.setAttribute("pLesTypesCheval", lesCateg);
+            
+            System.out.println("retour form");
+            
            this.getServletContext().getRequestDispatcher("/vues/ventes/venteAjouter.jsp" ).forward( request, response );
         }
     }

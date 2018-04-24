@@ -134,12 +134,12 @@ public class VenteDAO {
             // id (clé primaire de la table client) est en auto_increment,donc on ne renseigne pas cette valeur
             // la paramètre RETURN_GENERATED_KEYS est ajouté à la requête afin de pouvoir récupérer l'id généré par la bdd (voir ci-dessous)
             // supprimer ce paramètre en cas de requête sans auto_increment.
-            requete=connection.prepareStatement("INSERT INTO VENTE (nom, dateDebut, codeLieu, codeCategVente) VALUES (?,?,?)", requete.RETURN_GENERATED_KEYS );
+            requete=connection.prepareStatement("INSERT INTO vente (nom, dateDebut, codeLieu, codeCategVente) VALUES (?,?,?,?)", requete.RETURN_GENERATED_KEYS );
             requete.setString(1, uneVente.getNom());
             requete.setString(2, uneVente.getDateDebutVente());
             requete.setInt(3, uneVente.getUnLieu().getId());
             requete.setString(4, uneVente.getUneCategVente().getCode());
-            
+                        
             System.out.println("requete=====" + requete);
            /* Exécution de la requête */
             requete.executeUpdate();
@@ -149,14 +149,6 @@ public class VenteDAO {
             while ( rs.next() ) {
                 idGenere = rs.getInt( 1 );
                 uneVente.setId(idGenere);
-            }
-            
-            // ajout des enregistrement dans la table clientcategvente
-            for (int i=0;i<uneVente.getLesTypes().size();i++){
-                PreparedStatement requete2=connection.prepareStatement("INSERT INTO venteTypeCheval (codeVente, codeTypeCheval) VALUES (?,?)");
-                 requete2.setInt(1, uneVente.getId());
-                 requete2.setInt(2, uneVente.getLesTypes().get(i).getId());
-                 requete2.executeUpdate();
             }
             
         }   

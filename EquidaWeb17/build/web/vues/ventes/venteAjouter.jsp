@@ -34,12 +34,12 @@
                 <br>
                 
                 <label for="dateDebut">Date : </label><br>
-                <input class="form-control" id="dateDebut"  type="text"  name="dateDebut" size="30" maxlength="30">      
+                <input class="form-control" id="dateDebut"  type="date"  name="dateDebut" size="30" maxlength="30">      
                 <br>
                 
                 <%-- Champ Liste des lieux --%>
                 <label for="lieu">Lieu : </label><br>
-                <select class="form-control" id="lieu">
+                <select class="form-control" id="lieu" name="lieu">
                     <%
                         ArrayList<Lieu> lesLieux = (ArrayList)request.getAttribute("pLesLieux");
                         for (int i=0; i<lesLieux.size();i++){
@@ -53,9 +53,9 @@
                 <label for="categVente">Catégorie de vente : </label><br>
                 <select class="form-control" name="categVente">
                 <%
-                        ArrayList<CategVente> lesCategVente = (ArrayList)request.getAttribute("pLesCategVente");
-                        for (int i=0; i<lesCategVente.size();i++){
-                            CategVente cv = lesCategVente.get(i);
+                        ArrayList<CategVente> lesCateg = (ArrayList)request.getAttribute("pLesCategVente");
+                        for (int i=0; i<lesCateg.size();i++){
+                            CategVente cv = lesCateg.get(i);
                             out.println("<option value ='" + cv.getCode()+ "'>" + cv.getLibelle()+ "</option>"); 
                            
                         }
