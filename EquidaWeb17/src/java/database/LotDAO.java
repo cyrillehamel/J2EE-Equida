@@ -9,7 +9,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import modele.Cheval;
 import modele.Lot;
+import modele.Vendeur;
 import modele.Vente;
 
 /**
@@ -58,5 +61,53 @@ public class LotDAO {
             //out.println("Erreur lors de l’établissement de la connexion");
         }
         return unLot ;    
+    }
+    public static ArrayList<Lot> getLesLots(Connection connection, String codeVente){      
+        ArrayList<Lot> lesLots = new  ArrayList<Lot>();
+        try
+        {
+            //preparation de la requete     
+            //codeCateg="ETE";
+            requete=connection.prepareStatement("SELECT l.id as idLot, l.prixDepart as prixDepartLot,l.codeVente as codeVenteLot, l.codeCheval as codeChevalLot,l.codeVendeur as codeVendeurLot, c.nom as nomCheval,c.id as idCheval,i.prenom as prenomVendeur, i.nom as nomVendeur, i.id as idIntervenant FROM vente v, lot l, cheval c,vendeur ve,intervenant i where c.id = l.codeCheval and v.id=l.codeVente and l.codeVendeur=ve.codeIntervenant and i.id=ve.codeIntervenant and v.id=? ");
+            requete.setString(1, codeVente);
+            //executer la requete
+            rs=requete.executeQuery();
+             
+            //On hydrate l'objet métier Client avec les résultats de la requête
+            while ( rs.next() ) {  
+                
+                
+                
+                Lot unLot = new Lot();
+                unLot.setId(rs.getInt("idLot"));
+                unLot.setPrixDepart(rs.getInt("prixDepartLot"));
+               
+                Cheval unCheval=new Cheval();
+                unCheval.setId(rs.getInt("idCheval"));
+                unCheval.setNom(rs.getString("nomCheval"));
+                
+                
+                Vendeur unVendeur=new Vendeur();
+                 unVendeur.setId(rs.getInt("idIntervenant"));
+                unVendeur.setNom(rs.getString("nomVendeur"));
+                unVendeur.setPrenom(rs.getString("prenomVendeur"));
+                unLot.setUnCheval(unCheval);
+                unLot.setUnVendeur(unVendeur);
+               
+                
+               
+                /*CategVente uneCateg = new CategVente();
+                uneCateg.setCode(rs.getString("code"));  // on aurait aussi pu prendre CodeCateg
+                uneCateg.setLibelle(rs.getString("libelle"));*/
+                
+                lesLots.add(unLot);
+            }
+        }   
+        catch (SQLException e) 
+        {
+            e.printStackTrace();
+            //out.println("Erreur lors de l’établissement de la connexion");
+        }
+        return lesLots ;    
     }
 }
