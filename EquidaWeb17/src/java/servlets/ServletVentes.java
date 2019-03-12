@@ -10,6 +10,7 @@ import database.ChevalDAO;
 import database.ClientDAO;
 import database.CourrielDAO;
 import database.LieuDAO;
+import database.LotDAO;
 import database.PaysDAO;
 import database.TypeChevalDAO;
 import database.Utilitaire;
@@ -30,6 +31,7 @@ import modele.Cheval;
 import modele.Client;
 import modele.Courriel;
 import modele.Lieu;
+import modele.Lot;
 import modele.Pays;
 import modele.TypeCheval;
 import modele.Vente;
@@ -111,6 +113,16 @@ public class ServletVentes extends HttpServlet {
             ArrayList<Client> lesClients = VenteDAO.getLesClients(connection, codeCat);
             request.setAttribute("pLesClients", lesClients);
             getServletContext().getRequestDispatcher("/vues/ventes/listerLesClients.jsp").forward(request, response);
+        }
+        if(url.equals("/EQUI01/ServletVentes/listerLesLots"))
+        {  
+           
+            String codeVente = (String)request.getParameter("codeVente");
+           
+            
+            ArrayList<Lot> lesLots = LotDAO.getLesLots(connection, codeVente);
+            request.setAttribute("pLesLots", lesLots);
+            getServletContext().getRequestDispatcher("/vues/ventes/listerLesLots.jsp").forward(request, response);
         }
         
         // Implémente la fonctionnalité « Saisie d'une vente de chevaux »

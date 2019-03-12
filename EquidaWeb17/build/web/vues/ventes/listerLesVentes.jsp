@@ -34,7 +34,9 @@
                         <th>catégorie</th>
                         <th> Lieu de vente </th>
                         <th> Liste des clients </th>
+                        <th> Liste des lots </th>
                         <th>courriel</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -66,6 +68,10 @@
 
                             out.println("<td><a href ='../ServletVentes/listerLesClients?codeCat="+ uneVente.getUneCategVente().getCode()+ "'>");
                             out.println("Lister les clients interessés");
+                            out.println("</td>");
+                            
+                            out.println("<td><a href ='../ServletVentes/listerLesLots?codeVente="+ uneVente.getId()+ "'>");
+                            out.println("liste des lots relatif a la vente");
                             out.println("</td>");
 
                             out.println("<td><a href ='../ServletVentes/listerLesCourriels?codeVente="+ uneVente.getId()+ "'>");
