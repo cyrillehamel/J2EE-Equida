@@ -8,6 +8,7 @@ package formulaires;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import modele.CategVente;
 import modele.Lieu;
 import modele.TypeCheval;
 import modele.Vente;
@@ -39,7 +40,7 @@ public class VenteForm {
     //méthode de validation du champ de saisie nom
     private void validationNom( String nom ) throws Exception {
         if ( nom != null && nom.length() < 3 ) {
-        throw new Exception( "Le nom d'utilisateur doit contenir au moins 3 caractères." );
+        throw new Exception( "Error" );
         }
     }
 
@@ -59,45 +60,34 @@ public class VenteForm {
     
     public Vente ajouterVente( HttpServletRequest request ) {
       
+        System.out.println("open form");
         Vente uneVente  = new Vente();
          
-        String id = getDataForm( request, "id" );
+        //String id = getDataForm( request, "id" );
         String nom = getDataForm( request, "nom" );
         String dateDebutVente = getDataForm( request, "dateDebut");
         String lieu = getDataForm( request, "lieu" );
+        String categVente = getDataForm(request, "categVente");
         
-        // Traitement de la liste à choix multiple
-        //Pour chq type selectionné, on instancie un nouveau type et on l'ajoute à la vente
-        TypeCheval unTypeCheval ;
-        String[] typeCheval = request.getParameterValues("typeCheval");
-        for (int i=0; i<typeCheval.length; i++){
-            unTypeCheval = new TypeCheval();
-            unTypeCheval.setId(Integer.parseInt(typeCheval[i]));
-            uneVente.addUnType(unTypeCheval);
-        }
-        
- 
-       /*
-        try {
-             validationNom( nom );
-        } catch ( Exception e ) {
-            setErreur( "nom", e.getMessage() );
-        }
-        unClient.setNom(nom);
-
-        if ( erreurs.isEmpty() ) {
-            resultat = "Succès de l'ajout.";
-        } else {
-            resultat = "Échec de l'ajout.";
-        }
-        */
-        
-        uneVente.setId(Integer.parseInt(id));
+        //uneVente.setId(Integer.parseInt(id));
         uneVente.setNom(nom);
         uneVente.setDateDebutVente(dateDebutVente);
-        //uneVente.setUnLieu(lieu.);
+        
+        System.out.println("nom + date");
+        System.out.println(lieu);
+        
+        
+        Lieu unLieu = new Lieu();
+        unLieu.setId(Integer.parseInt(lieu));
+        uneVente.setUnLieu(unLieu);
+        
+        System.out.println();
+        
+        CategVente uneCateg = new CategVente();
+        uneCateg.setCode(categVente);
+        uneVente.setUneCategVente(uneCateg);
                
-       
+        System.out.println("sorti form");
         return uneVente ;
     }
 }

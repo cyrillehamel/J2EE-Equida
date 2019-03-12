@@ -25,7 +25,7 @@ public class LieuDAO {
     static PreparedStatement requete=null;
     static ResultSet rs=null;
     
-    public static ArrayList<Lieu> getLesLieu(Connection connection) {
+    public static ArrayList<Lieu> getLesLieux(Connection connection) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         ArrayList<Lieu> lesLieux = new  ArrayList<Lieu>();
