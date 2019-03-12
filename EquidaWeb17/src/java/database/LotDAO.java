@@ -66,6 +66,7 @@ public class LotDAO {
         ArrayList<Lot> lesLots = new  ArrayList<Lot>();
         try
         {
+            
             //preparation de la requete     
             //codeCateg="ETE";
             requete=connection.prepareStatement("SELECT l.id as idLot, l.prixDepart as prixDepartLot,l.codeVente as codeVenteLot, l.codeCheval as codeChevalLot,l.codeVendeur as codeVendeurLot, c.nom as nomCheval,c.id as idCheval,i.prenom as prenomVendeur, i.nom as nomVendeur, i.id as idIntervenant FROM vente v, lot l, cheval c,vendeur ve,intervenant i where c.id = l.codeCheval and v.id=l.codeVente and l.codeVendeur=ve.codeIntervenant and i.id=ve.codeIntervenant and v.id=? ");
